@@ -1,0 +1,63 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+	<display-name>Sample Web App</display-name>
+
+	<filter>
+		<filter-name>RateLimitingCheckIn</filter-name>
+		<filter-class>bb.ratelimiting.RateLimitingFilter</filter-class>
+		<init-param>
+			<param-name>config</param-name>
+			<param-value><![CDATA[
+			{
+	"enabled" : true,	
+	"persistConfig" : true,
+	"hazelcast" : {
+			"mapName" : "ratemapv2",
+			"configMapName" : "rate-limiting-config-map"
+	},
+    "jmx" : {
+    		"statsDomainPrefix": "bb.ratelimiting",
+            "configDomainPrefix": "bb.ratelimiting"
+    },	
+	"filterDefinitions" : {
+		"urlFilter1" : {
+			"type" : "path",
+			"path" : ".*/index.jsp",
+			"extract" : null
+		}
+	},
+	"labels" : [
+		{
+			"name" : "Label1",
+			"rateLimit" :
+			{
+				"rate" : "10/minute",
+				"rateExceededResponse" : "error",
+				"timeConstant" : 3000
+			},
+			"filters" : ["urlFilter1"]
+		},
+		{
+			"name" : "Label2",
+			"rateLimit" :
+			{
+				"rate" : "100/second",
+				"rateExceededResponse" : "error",
+				"timeConstant" : 50
+			},
+			"filters" : ["urlFilter1"]
+		}
+	]
+}]]></param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>RateLimitingCheckIn</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+</web-app>

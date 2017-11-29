@@ -1,0 +1,133 @@
+{
+  "settings" : {
+  
+    "RateLimitingExample1" : {
+      "filterDefinitions" : {
+        "urlExtractor" : {
+          "type" : "path",
+          "httpMethods" : ["POST","GET","PUT"],
+          "path" : "/example1",
+          "extract" : null
+        }
+      },
+      "labels" : [ {
+        "filters" : [ "urlExtractor" ],
+        "enabled" : true,
+        "rateLimit" : {
+          "rate" : "1/second",
+          "rateExceededResponse" : "error",
+          "timeConstant" : 0.3
+        },
+        "name" : "UrlLimit"
+      } ],
+      "enabled" : true,
+      "persistConfig" : true,
+      "hazelcast" : {
+        "hzConfigFile" : null,
+        "mapName" : "ratemapv2",
+        "configMapName" : "rate-limiting-config-map"
+      },
+      "jmx" : {
+        "statsDomainPrefix" : "com.blackberry",
+        "configDomainPrefix" : "com.blackberry",
+        "serverName" : null
+      }
+    },
+
+    "RateLimitingExample2" : {
+      "filterDefinitions" : {
+        "urlExtractor" : {
+          "type" : "path",
+          "path" : "/unit/example2",
+          "extract" : null
+        }
+      },
+      "labels" : [ {
+        "filters" : [ "urlExtractor" ],
+        "enabled" : true,
+        "rateLimit" : {
+          "rate" : "1/second",
+          "rateExceededResponse" : "error",
+          "timeConstant" : 0.3
+        },
+        "name" : "UrlLimit"
+      } ],
+      "enabled" : true,
+      "persistConfig" : true,
+      "hazelcast" : {
+        "hzConfigFile" : null,
+        "mapName" : "ratemapv2",
+        "configMapName" : "rate-limiting-config-map"
+      },
+      "jmx" : {
+        "statsDomainPrefix" : "com.blackberry",
+        "configDomainPrefix" : "com.blackberry",
+        "serverName" : null
+      }
+    },
+    
+    "RateLimitingExample3" : {
+      "filterDefinitions" : {
+        "unit2Extractor" : {
+          "type" : "path",
+          "path" : "/unit2/example3/([0-9]+)",
+          "extract" : 1
+        }
+      },
+      "labels" : [ {
+        "filters" : [ "unit2Extractor" ],
+        "enabled" : true,
+        "rateLimit" : {
+          "rate" : "500/second",
+          "rateExceededResponse" : "error",
+          "timeConstant" : 0.3
+        },
+        "name" : "Example2Limit"
+      } ],
+      "enabled" : true,
+      "persistConfig" : true,
+      "hazelcast" : {
+        "hzConfigFile" : null,
+        "mapName" : "ratemapv2",
+        "configMapName" : "rate-limiting-config-map"
+      },
+      "jmx" : {
+        "statsDomainPrefix" : "com.blackberry",
+        "configDomainPrefix" : "com.blackberry",
+        "serverName" : null
+      }
+    },
+    "Example44" : {
+      "filterDefinitions" : {
+        "unit33Extractor" : {
+          "type" : "header",
+          "expression" : null,
+          "headerName" : "Srpid",
+          "extract" : 0
+        }
+      },
+      "labels" : [ {
+        "filters" : [ "unit33Extractor" ],
+        "enabled" : true,
+        "rateLimit" : {
+          "rate" : "10/second",
+          "rateExceededResponse" : "error",
+          "timeConstant" : 0.3
+        },
+        "name" : "Unit33Limit"
+      } ],
+      "enabled" : true,
+      "persistConfig" : true,
+      "hazelcast" : {
+        "hzConfigFile" : null,
+        "mapName" : "ratemapv2",
+        "configMapName" : "rate-limiting-config-map"
+      },
+      "jmx" : {
+        "statsDomainPrefix" : "com.blackberry",
+        "configDomainPrefix" : "com.blackberry",
+        "serverName" : null
+      }
+    }
+  }
+}

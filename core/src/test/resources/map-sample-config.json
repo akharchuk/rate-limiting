@@ -1,0 +1,84 @@
+{
+  "settings" : {
+    "testFilter" : {
+      "filterDefinitions" : {
+        "urlFilter" : {
+          "type" : "path",
+          "path" : ".*/unit",
+          "extract" : 1
+        },
+        "subunitFilter" : {
+          "type" : "path",
+          "path" : ".*/unit/subunit/([0-9]{10})",
+          "extract" : 1
+        }
+      },
+      "labels" : [ {
+        "filters" : [ "urlFilter", "subunitFilter" ],
+        "enabled" : true,
+        "rateLimit" : {
+          "rate" : "10/day",
+          "rateExceededResponse" : "error",
+          "timeConstant" : 10.0
+        },
+        "name" : "Label1"
+      }, {
+        "filters" : [ "urlFilter" ],
+        "enabled" : true,
+        "rateLimit" : {
+          "rate" : "100/second",
+          "rateExceededResponse" : "error",
+          "timeConstant" : 10.0
+        },
+        "name" : "Label2"
+      } ],
+      "enabled" : true,
+      "disabledForHeaders" : ["SOME_HEADER","SOME_HEADER2"],
+      "persistConfig" : true,
+      "hazelcast" : {
+        "mapName" : "ratemapv2",
+        "configMapName" : "rate-limiting-config-map"
+      }
+    },
+    "testFilter2" : {
+      "filterDefinitions" : {
+        "urlFilter" : {
+          "type" : "path",
+          "path" : ".*/unit",
+          "extract" : 1
+        },
+        "subunitFilter" : {
+          "type" : "path",
+          "path" : ".*/unit/subunit/([0-9]{10})",
+          "extract" : 1
+        }
+      },
+      "labels" : [ {
+        "filters" : [ "urlFilter", "subunitFilter" ],
+        "enabled" : true,
+        "rateLimit" : {
+          "rate" : "10/day",
+          "rateExceededResponse" : "error",
+          "timeConstant" : 10.0
+        },
+        "name" : "Label1"
+      }, {
+        "filters" : [ "urlFilter" ],
+        "enabled" : true,
+        "rateLimit" : {
+          "rate" : "100/second",
+          "rateExceededResponse" : "error",
+          "timeConstant" : 10.0
+        },
+        "name" : "Label2"
+      } ],
+      "enabled" : true,
+      "persistConfig" : true,
+      "disabledForHeaders" : ["SOME_HEADER3","SOME_HEADER4"],
+      "hazelcast" : {
+        "mapName" : "ratemapv2",
+        "configMapName" : "rate-limiting-config-map"
+      }
+    }
+  }
+}

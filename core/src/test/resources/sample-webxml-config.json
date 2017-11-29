@@ -1,0 +1,44 @@
+{
+	"enabled" : true,	
+	"persistConfig" : true,
+	
+	"hazelcast" : {
+			"mapName" : "ratemapv2",
+			"configMapName" : "rate-limiting-config-map"
+	},
+	"filterDefinitions" : {
+		"urlFilter" : {
+			"type" : "path",
+			"path" : ".*/unit",
+			"extract" : 1
+		},
+		"subunitFilter" : {
+			"type" : "path",
+			"path" : ".*/unit/subunit/([0-9]{10})",
+			"extract" : 1
+		}
+	},
+	"labels" : [
+		{
+			"name" : "Label1",
+			"rateLimit" :
+			{
+				"rate" : "10/day",
+				"rateExceededResponse" : "error",
+				"timeConstant" : 10
+			},
+			"filters" : ["urlFilter","subunitFilter"]
+		},
+		{
+			"name" : "Label2",
+			"rateLimit" :
+			{
+				"rate" : "100/second",
+				"rateExceededResponse" : "error",
+				"timeConstant" : 10
+			},
+			"filters" : ["urlFilter"]
+		}
+	]
+}
+
